@@ -1,0 +1,40 @@
+resilience4j.retry:
+  configs:
+    default:
+      maxAttempts: 3
+      waitDuration: 1000
+      retryExceptions:
+        - linus.resilience4j.exception.NoticeableException
+      ignoreExceptions:
+        - linus.resilience4j.exception.IgnoredException
+  instances:
+    simpleRetryConfig:
+      base-config: default
+
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      slidingWindowType: COUNT_BASED
+      minimumNumberOfCalls: 7 # 7? ??? CLOSED ?? ?? : Sliding window ?? ???? ??????
+      slidingWindowSize: 10 # minimumNumberOfCalls ??? 10?? ??? ???? ?? ??
+      failure-rate-threshold: 40 # slidingWindowSize ? 40% ??? ?? ? OPEN ??? ??
+      wait-duration-in-open-state:
+        seconds: 10 # OPEN -> HALF_OPEN ?? ??? ??? ?? (10?? ?? ??? ?)
+
+      slow-call-duration-threshold:
+        seconds: 1 # ?? ?? ??? 1? ??? ?? ??? ??
+      slow-call-rate-threshold: 60 # slidingWindowSize ? 60% ??? ?? ? OPEN ??? ??
+
+      permitted-number-of-calls-in-half-open-state: 5 # HALF_OPEN ???? CLOSE ??? ???? ?? ???? ?
+      automatic-transition-from-open-to-half-open-enabled: true # OPEN -> HALF_OPEN ?? ?? ?? ??
+
+      event-consumer-buffer-size: 10 # event buffer size for actuator
+
+      record-exceptions:
+        - linus.resilience4j.exception.NoticeableException
+      ignore-exceptions:
+        - linus.resilience4j.exception.IgnoredException
+
+  instances:
+    simpleCircuitBreakerConfig:
+      base-config: default
