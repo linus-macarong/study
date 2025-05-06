@@ -29,14 +29,21 @@ dependencies {
     runtimeOnly("com.mysql:mysql-connector-j")
     implementation("org.flywaydb:flyway-core")
     implementation("org.flywaydb:flyway-mysql")
+    implementation("org.redisson:redisson:3.45.1")
 
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
 
     // Web
     implementation("org.springframework.boot:spring-boot-starter-web")
 
+    // Security
+    implementation("org.springframework.security:spring-security-crypto")
+    implementation("org.bouncycastle:bcprov-jdk18on:1.78.1")
+    implementation("com.auth0:java-jwt:4.5.0")
+
     // Utils
     implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation("io.github.oshai:kotlin-logging-jvm:7.0.3")
 
     // Monitoring
     implementation("org.springframework.boot:spring-boot-starter-actuator")
@@ -45,11 +52,17 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+
     testImplementation("org.springframework.boot:spring-boot-testcontainers")
     testImplementation("org.testcontainers:junit-jupiter")
     testImplementation("org.testcontainers:mysql")
+    testImplementation("com.redis:testcontainers-redis:2.2.2")
+
     testImplementation("io.kotest:kotest-runner-junit5-jvm:5.9.1")
     testImplementation("io.kotest.extensions:kotest-extensions-spring:1.3.0")
+
+    testImplementation("io.rest-assured:rest-assured:5.5.0")
+    testImplementation("io.rest-assured:kotlin-extensions:5.5.0")
 }
 
 kotlin {

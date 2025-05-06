@@ -1,14 +1,7 @@
 package linus.test
 
-import org.junit.jupiter.api.Test
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.context.annotation.Import
+import linus.test.test.IntegrationTestFunSpec
 
-@Import(TestcontainersConfiguration::class)
-@SpringBootTest
-class TestExamplesApplicationTests {
-
-    @Test
-    fun contextLoads() {
-    }
-}
+class TestExamplesApplicationTests : IntegrationTestFunSpec({
+    test("contextLoads") {}
+})
