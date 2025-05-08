@@ -27,11 +27,15 @@ abstract class AcceptanceTest(body: FunSpec.() -> Unit = {}) : IntegrationTestFu
         RestAssured.requestSpecification = RequestSpecBuilder()
             .setPort(this.port!!)
             .setContentType(ContentType.JSON)
+            .addFilters(
+                listOf(
+                    RequestLoggingFilter(),
+                    ResponseLoggingFilter(),
+                )
+            )
             .build()
 
         RestAssured.filters(
-            RequestLoggingFilter(),
-            ResponseLoggingFilter(),
         )
     }
 }
