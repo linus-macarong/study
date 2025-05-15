@@ -2,6 +2,7 @@ package linus.test.core.user.application
 
 import linus.test.core.user.domain.User
 import linus.test.core.user.domain.UserRepository
+import linus.test.core.user.domain.event.UserEventPublisher
 import linus.test.core.user.domain.existsActiveByNickname
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -9,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class CreateUserService(
     private val userRepository: UserRepository,
+    private val userEventPublisher: UserEventPublisher,
 ) {
 
     @Transactional
@@ -17,7 +19,9 @@ class CreateUserService(
             throw IllegalStateException("User already exists (nickname=${command.nickname})")
         }
 
-        return this.userRepository.save(command.toEntity())
+        val user = this.userRepository.save(command.toEntity())
+        this.userEventPublisher.publishUserCreatedEvent(user = user)
+        return user
     }
 
     data class Command(
